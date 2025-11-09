@@ -277,7 +277,7 @@ const animationTimeline = () => {
             confirmButtonText: 'Yes, take me there!'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "https://hbd-aiman.vercel.app/";
+                window.location.href = "https://hbdty-marwa.vercel.app/";
             }
         });
     });
