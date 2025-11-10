@@ -88,7 +88,7 @@
         <div class="scene-content">
             <p class="ui-text fade-line">Today marks</p>
             <div class="countdown fade-line" style="animation-delay:0.5s;">
-                <span id="age-display">19</span>
+                <span id="age-display">18</span>
             </div>
             <p class="ui-text fade-line" style="animation-delay:1s;">incredible years of you</p>
         </div>
@@ -137,7 +137,7 @@
 <script>
 const CONFIG = {
     RECIPIENT_NAME: "Beautiful",
-    RECIPIENT_AGE: 19,
+    RECIPIENT_AGE: 18,
     SCENE_TIMINGS: { scene0:0, scene1:4000, scene2:6000, scene3:5000, scene4:6000, scene5:5000, scene6:0 },
     TYPING_SPEED: 75
 };
@@ -160,12 +160,20 @@ function createStars() {
 }
 
 function typeText(element, text, speed, callback){
-    let i=0;
-    element.textContent='';
+    let i = 0;
+    element.innerHTML = ''; // use innerHTML to allow <br>
     element.classList.add('typed-text');
-    const interval=setInterval(()=>{
-        if(i<text.length){ element.textContent+=text.charAt(i); i++; }
-        else{ clearInterval(interval); element.classList.add('done'); if(callback)callback(); }
+    const interval = setInterval(() => {
+        if (i < text.length) {
+            const char = text.charAt(i);
+            if (char === "\n") element.innerHTML += "<br>"; // handle line breaks
+            else element.innerHTML += char;
+            i++;
+        } else {
+            clearInterval(interval);
+            element.classList.add('done');
+            if (callback) callback();
+        }
     }, speed);
 }
 
@@ -215,7 +223,7 @@ function continueTimeline(){
             currentScene=3+index;
             transitionScene(currentScene-1,currentScene);
             if(currentScene===5){
-                typeText(document.getElementById('typed-6'),"You make the world brighter just by being in it... 🌹",CONFIG.TYPING_SPEED,()=>{
+                typeText(document.getElementById('typed-6'),"You make the world brighter\n just by being in it... 🌹",CONFIG.TYPING_SPEED,()=>{
                     setTimeout(()=>{
                         currentScene=6;
                         transitionScene(5,6);
