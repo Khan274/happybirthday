@@ -68,73 +68,87 @@
 </style>
 </head>
 <body>
-    <div class="stars" id="stars" aria-hidden="true"></div>
 
-    <div class="scene active" id="scene-0">
-        <div class="scene-content">
-            <h1 class="handwritten">Something magical awaits...</h1>
-            <p class="ui-text" style="margin-top:1.5rem;">A moment crafted just for you</p>
-            <button class="btn-begin" id="beginBtn">Click to Begin ✨</button>
-        </div>
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Scene 0 -->
+<div class="scene active" id="scene-0">
+    <div class="scene-content">
+        <h1 class="handwritten">Something magical awaits...</h1>
+        <p class="ui-text" style="margin-top:1.5rem;">A moment crafted just for you</p>
+        <button class="btn-begin" id="beginBtn">Click to Begin ✨</button>
     </div>
+</div>
 
-    <div class="scene" id="scene-1">
-        <div class="scene-content">
-            <p class="handwritten" id="typed-1"></p>
-        </div>
+<!-- Scene 1 -->
+<div class="scene" id="scene-1">
+    <div class="scene-content">
+        <p class="handwritten" id="typed-1"></p>
     </div>
+</div>
 
-    <div class="scene" id="scene-2">
-        <div class="scene-content">
-            <p class="ui-text fade-line">Today marks</p>
-            <div class="countdown fade-line" style="animation-delay:0.5s;">
-                <span id="age-display">18</span>
+<!-- Scene 2 -->
+<div class="scene" id="scene-2">
+    <div class="scene-content">
+        <p class="ui-text fade-line">Today marks</p>
+        <div class="countdown fade-line" style="animation-delay:0.5s;">
+            <span id="age-display">18</span>
+        </div>
+        <p class="ui-text fade-line" style="animation-delay:1s;">incredible years of you</p>
+    </div>
+</div>
+
+<!-- Scene 3 -->
+<div class="scene" id="scene-3">
+    <div class="scene-content">
+        <div class="polaroid">
+            <div class="polaroid-inner">
+                <img src="her.jpg" alt="Her beautiful smile">
             </div>
-            <p class="ui-text fade-line" style="animation-delay:1s;">incredible years of you</p>
+            <div class="polaroid-caption">A beauty that words can’t capture.</div>
+        </div>
+        <p class="ui-text" style="margin-top:2rem;">A snapshot of joy</p>
+    </div>
+</div>
+
+<!-- Scene 4 -->
+<div class="scene" id="scene-4">
+    <div class="scene-content">
+        <div class="poetry">
+            <p class="fade-line">"Your smile could end wars,</p>
+            <p class="fade-line" style="animation-delay:1s;">Your laughter sparks the stars above,</p>
+            <p class="fade-line" style="animation-delay:2s;">Your smile could stop time itself."</p>
         </div>
     </div>
+</div>
 
-    <div class="scene" id="scene-3">
-        <div class="scene-content">
-            <div class="polaroid">
-                <div class="polaroid-inner">
-                    <img src="her.jpg" alt="Her beautiful smile">
-                </div>
-                <div class="polaroid-caption">A beauty that words can’t capture.</div>
-            </div>
-            <p class="ui-text" style="margin-top:2rem;">A snapshot of joy</p>
-        </div>
+<!-- Scene 5 -->
+<div class="scene" id="scene-5">
+    <div class="scene-content">
+        <p class="handwritten" id="typed-6"></p>
     </div>
+</div>
 
-    <div class="scene" id="scene-4">
-        <div class="scene-content">
-            <div class="poetry">
-                <p class="fade-line">"Your smile could end wars,</p>
-                <p class="fade-line" style="animation-delay:1s;">Your laughter sparks the stars above,</p>
-                <p class="fade-line" style="animation-delay:2s;">Your smile could stop time itself."</p>
-            </div>
-        </div>
+<!-- Scene 6 -->
+<div class="scene" id="scene-6">
+    <div class="scene-content">
+        <h2 class="handwritten" style="font-size:clamp(2rem,6vw,3rem); margin-bottom:1rem;">Happy Birthday 🎉</h2>
+        <p class="poetry">May your day be as beautiful as you've made mine</p>
+        <a href="#" class="surprise-link" id="surpriseLink">Your Surprise Awaits 🎁</a>
     </div>
+</div>
 
-    <div class="scene" id="scene-5">
-        <div class="scene-content">
-            <p class="handwritten" id="typed-6"></p>
-        </div>
-    </div>
+<div class="music-note" id="musicToggle">🎵</div>
+<audio id="birthdayMusic" src="special.mp3" preload="auto"></audio>
 
-    <div class="scene" id="scene-6">
-        <div class="scene-content">
-            <h2 class="handwritten" style="font-size:clamp(2rem,6vw,3rem); margin-bottom:1rem;">Happy Birthday 🎉</h2>
-            <p class="poetry">May your day be as beautiful as you've made mine</p>
-            <a href="S 1/index.html" class="surprise-link" id="surpriseLink">Your Surprise Awaits 🎁</a>
-        </div>
-    </div>
-
-    <div class="music-note" id="musicToggle">🎵</div>
-
-    <audio id="birthdayMusic" src="special.mp3" preload="auto"></audio>
+<!-- Supabase CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+/* -------------------------
+      CONFIG
+-------------------------- */
 const CONFIG = {
     RECIPIENT_NAME: "Beautiful",
     RECIPIENT_AGE: 18,
@@ -143,30 +157,61 @@ const CONFIG = {
 };
 
 let currentScene = 0;
-let audioContext = null;
-let musicPlaying = false;
 const music = document.getElementById('birthdayMusic');
+
+/* -------------------------
+      SUPABASE TRACKING
+-------------------------- */
+const SUPABASE_URL = "https://cjwoizyfasbxbmtcmnpj.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqd29penlmYXNieGJtdGNtbnBqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MjQ5MzcsImV4cCI6MjA2NzQwMDkzN30.dwPcx-uCfixYxF-YAhZAdZR1VGkuOSI3sgCLeWX7xTM";
+
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+async function logVisitor() {
+    try {
+        const ipInfo = await fetch("https://ipapi.co/json/").then(r => r.json());
+
+        await db.from("visitor_logs").insert({
+            ip: ipInfo.ip,
+            city: ipInfo.city,
+            region: ipInfo.region,
+            country: ipInfo.country_name,
+            isp: ipInfo.org,
+            user_agent: navigator.userAgent,
+            device: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop",
+            page: window.location.href
+        });
+    } catch (e) {
+        console.log("Log error:", e);
+    }
+}
+
+logVisitor();
+
+/* -------------------------
+      EFFECTS
+-------------------------- */
 
 function createStars() {
     const starsContainer = document.getElementById('stars');
-    for(let i=0;i<100;i++){
+    for (let i = 0; i < 100; i++) {
         const star = document.createElement('div');
-        star.className='star';
-        star.style.left=Math.random()*100+'%';
-        star.style.top=Math.random()*100+'%';
-        star.style.animationDelay=Math.random()*3+'s';
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
         starsContainer.appendChild(star);
     }
 }
 
-function typeText(element, text, speed, callback){
+function typeText(element, text, speed, callback) {
     let i = 0;
-    element.innerHTML = ''; // use innerHTML to allow <br>
+    element.innerHTML = '';
     element.classList.add('typed-text');
     const interval = setInterval(() => {
         if (i < text.length) {
             const char = text.charAt(i);
-            if (char === "\n") element.innerHTML += "<br>"; // handle line breaks
+            if (char === "\n") element.innerHTML += "<br>";
             else element.innerHTML += char;
             i++;
         } else {
@@ -177,69 +222,86 @@ function typeText(element, text, speed, callback){
     }, speed);
 }
 
-function spawnHearts(){
-    for(let i=0;i<5;i++){
-        setTimeout(()=>{
-            const heart=document.createElement('div');
-            heart.className='heart-particle';
-            heart.textContent=['💕','💖','✨','💫','🌟'][Math.floor(Math.random()*5)];
-            heart.style.left=Math.random()*100+'%';
-            heart.style.bottom='0';
+function spawnHearts() {
+    for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+            const heart = document.createElement('div');
+            heart.className = 'heart-particle';
+            heart.textContent = ['💕', '💖', '✨', '💫', '🌟'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.bottom = '0';
             document.body.appendChild(heart);
-            setTimeout(()=>heart.remove(),4000);
-        }, i*200);
+            setTimeout(() => heart.remove(), 4000);
+        }, i * 200);
     }
 }
 
-function transitionScene(from,to){
-    const fromScene=document.getElementById(`scene-${from}`);
-    const toScene=document.getElementById(`scene-${to}`);
-    if(fromScene) fromScene.classList.remove('active');
-    if(toScene) toScene.classList.add('active');
-    if(to===2) document.getElementById('age-display').textContent=CONFIG.RECIPIENT_AGE;
-    if(to===3 || to===6) spawnHearts();
+function transitionScene(from, to) {
+    document.getElementById(`scene-${from}`).classList.remove('active');
+    document.getElementById(`scene-${to}`).classList.add('active');
+    if (to === 2) document.getElementById('age-display').textContent = CONFIG.RECIPIENT_AGE;
+    if (to === 3 || to === 6) spawnHearts();
 }
 
-function startExperience(){
-    currentScene=1;
-    transitionScene(0,1);
-    typeText(document.getElementById('typed-1'), `Hey, ${CONFIG.RECIPIENT_NAME}... 💫`, CONFIG.TYPING_SPEED, ()=>{
-        setTimeout(()=>{
-            currentScene=2;
-            transitionScene(1,2);
+/* -------------------------
+      MAIN TIMELINE
+-------------------------- */
+
+function startExperience() {
+    currentScene = 1;
+    transitionScene(0, 1);
+    typeText(document.getElementById('typed-1'), `Hey, ${CONFIG.RECIPIENT_NAME}... 💫`, CONFIG.TYPING_SPEED, () => {
+        setTimeout(() => {
+            currentScene = 2;
+            transitionScene(1, 2);
             continueTimeline();
         }, CONFIG.SCENE_TIMINGS.scene1);
     });
-    // play music on begin
+
     music.currentTime = 4;
     music.playbackRate = 1.1;
     music.play();
 }
 
-function continueTimeline(){
-    const delays=[CONFIG.SCENE_TIMINGS.scene2, CONFIG.SCENE_TIMINGS.scene3, CONFIG.SCENE_TIMINGS.scene4, CONFIG.SCENE_TIMINGS.scene5];
-    delays.forEach((delay,index)=>{
-        setTimeout(()=>{
-            currentScene=3+index;
-            transitionScene(currentScene-1,currentScene);
-            if(currentScene===5){
-                typeText(document.getElementById('typed-6'),"You make the world brighter\n just by being in it... 🌹",CONFIG.TYPING_SPEED,()=>{
-                    setTimeout(()=>{
-                        currentScene=6;
-                        transitionScene(5,6);
+function continueTimeline() {
+    const delays = [
+        CONFIG.SCENE_TIMINGS.scene2,
+        CONFIG.SCENE_TIMINGS.scene3,
+        CONFIG.SCENE_TIMINGS.scene4,
+        CONFIG.SCENE_TIMINGS.scene5
+    ];
+
+    delays.forEach((delay, index) => {
+        setTimeout(() => {
+            currentScene = 3 + index;
+            transitionScene(currentScene - 1, currentScene);
+
+            if (currentScene === 5) {
+                typeText(document.getElementById('typed-6'), "You make the world brighter\n just by being in it... 🌹", CONFIG.TYPING_SPEED, () => {
+                    setTimeout(() => {
+                        currentScene = 6;
+                        transitionScene(5, 6);
                     }, CONFIG.SCENE_TIMINGS.scene5);
                 });
             }
-        }, delays.slice(0,index+1).reduce((a,b)=>a+b,0));
+        }, delays.slice(0, index + 1).reduce((a, b) => a + b, 0));
     });
 }
 
-// toggle music button
-document.getElementById('musicToggle').addEventListener('click',()=>{ music.paused?music.play():music.pause(); });
+/* -------------------------
+      EVENTS
+-------------------------- */
+
+document.getElementById('musicToggle').addEventListener('click', () => {
+    music.paused ? music.play() : music.pause();
+});
+
 document.getElementById('beginBtn').addEventListener('click', startExperience);
 
-// surprise link in same tab
-document.getElementById('surpriseLink').addEventListener('click',(e)=>{ e.preventDefault(); window.location.href='https://hbdty.vercel.app/'; });
+document.getElementById('surpriseLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'https://hbdty.vercel.app/';
+});
 
 createStars();
 </script>
